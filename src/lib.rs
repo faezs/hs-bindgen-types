@@ -194,12 +194,21 @@ repr_hs! {
     c_int    => CInt,
     c_long   => CLong,
     c_short  => CShort,
-    c_uchar  => CUChar,
+    //c_uchar  => CUChar, -- c_uchar and c_char are both u8 on aarch64, not sure if this is the right strategy or if newtypes are required
     c_uint   => CUInt,
     c_ulong  => CULong,
     c_ushort => CUShort,
     ()       => Empty,
 }
+
+
+#[cfg(not(target_arch = "aarch64"))]
+impl ReprHs for c_uchar {
+    fn into() -> HsType {
+        HsType::CUChar
+    }
+}
+
 
 impl<T> ReprHs for *const T
 where
