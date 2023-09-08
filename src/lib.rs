@@ -188,13 +188,13 @@ macro_rules! repr_hs {
 pub(crate) use repr_hs;
 
 repr_hs! {
-    c_char   => CChar,
+    //c_char   => CChar,
     c_double => CDouble,
     c_float  => CFloat,
     c_int    => CInt,
     c_long   => CLong,
     c_short  => CShort,
-    //c_uchar  => CUChar, -- c_uchar and c_char are both u8 on aarch64, not sure if this is the right strategy or if newtypes are required
+    c_uchar  => CUChar, // -- c_uchar and c_char are both u8 on aarch64, not sure if this is the right strategy or if newtypes are required
     c_uint   => CUInt,
     c_ulong  => CULong,
     c_ushort => CUShort,
@@ -203,7 +203,7 @@ repr_hs! {
 
 
 #[cfg(not(target_arch = "aarch64"))]
-impl ReprHs for c_uchar {
+impl ReprHs for c_char {
     fn into() -> HsType {
         HsType::CUChar
     }
